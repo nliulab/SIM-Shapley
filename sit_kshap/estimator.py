@@ -42,6 +42,8 @@ class SIT_KSHAP:
             thresh: threshold of convergence detection
             n_jobs: number of jobs used for parallel computing. -1 means using all cpu cores.
             random_state: random_state for np.random.default_rng().
+            avoid_negative：avoid negative sampling
+            verbose：verbose
 
         Returns:
             beta: shapley values vector.
