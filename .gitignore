@@ -1,0 +1,13 @@
+_pycache__
+*.pyc
+.DS_Store
+.ipynb_checkpoints
+.eggs
+build
+dist
+*catboost_info
+/*.ipynb
+*MNIST
+.idea/
+venv/
+env/
