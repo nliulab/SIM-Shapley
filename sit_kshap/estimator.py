@@ -30,7 +30,7 @@ class SIT_KSHAP:
 
     def __call__(self, X, Y, z_sample_num, data_batch_size, max_iteration_num=1e5,
                  thresh=0.05, n_jobs=-1, random_state=None, avoid_negative=False,
-                 verbose=False):
+                 verbose=False, return_convergence_process=False):
         """
         Main sampling process of SIT-KSHAP.
         Args:
@@ -139,7 +139,8 @@ class SIT_KSHAP:
                 std = np.sqrt(np.max(var)/(i+1))
                 mean_gap = max(mean_new.max()-mean_new.min(), 1e-12)
                 ratio = std / mean_gap
-                converge_record_list.append(ratio)
+                if return_convergence_process:
+                    converge_record_list.append(ratio)
                 if verbose:
                     print('ratio:', ratio)
 
@@ -156,7 +157,10 @@ class SIT_KSHAP:
 
         bar.close()
 
-        return beta, converge_record_list
+        if return_convergence_process:
+            return beta, converge_record_list
+        else:
+            return beta
 
 
     def _update_delta(self, beta, A, b, v_1, v_0, n, avoid_negative=False):
