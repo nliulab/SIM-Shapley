@@ -30,7 +30,7 @@ class SIT_KSHAP:
 
     def __call__(self, X, Y, z_sample_num, data_batch_size, max_iteration_num=1e5,
                  thresh=0.05, n_jobs=-1, random_state=None, avoid_negative=False,
-                 verbose=False, return_convergence_process=False):
+                 verbose=False, return_convergence_process=False, negative_ratio=0.2):
         """
         Main sampling process of SIT-KSHAP.
         Args:
@@ -43,7 +43,8 @@ class SIT_KSHAP:
             n_jobs: number of jobs used for parallel computing. -1 means using all cpu cores.
             random_state: random_state for np.random.default_rng().
             avoid_negative：avoid negative sampling
-            verbose：verbose
+            verbose：verbose.
+            negative_ratio: the ratio to define negative sampling.
 
         Returns:
             beta: shapley values vector.
@@ -123,7 +124,7 @@ class SIT_KSHAP:
                     var_l2 = np.linalg.norm(var)
                 var_ratio = var_gap / var_l2
                 # print(var_gap, var_l2, var_ratio)
-                if var_ratio > 0.2:
+                if var_ratio > negative_ratio:
                     beta = old_beta
                     if verbose:
                         print('Negative sampling detected!')
