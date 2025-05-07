@@ -28,9 +28,9 @@ class SIT_KSHAP:
         self.t = t
 
 
-    def __call__(self, X, Y, z_sample_num, data_batch_size, max_iteration_num=1e5,
+    def __call__(self, X, Y, z_sample_num, data_batch_size=512, max_iteration_num=1e5,
                  thresh=0.05, n_jobs=-1, random_state=None, avoid_negative=False,
-                 verbose=False, return_convergence_process=False, negative_ratio=0.2):
+                 verbose=False, return_convergence_process=False, negative_ratio=0.3):
         """
         Main sampling process of SIT-KSHAP.
         Args:
