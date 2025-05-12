@@ -4,7 +4,7 @@ process.
 """
 import warnings
 import numpy as np
-from sit_kshap import utils
+from sim_shapley import utils
 
 class Imputer:
     """

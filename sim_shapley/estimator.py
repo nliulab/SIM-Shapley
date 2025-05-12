@@ -1,14 +1,14 @@
 """
-This module is the main part to implement our SIT_KSHAP method, the iterative process to update delta.
+This module is the main part to implement our SIM-Shapley method, the iterative process to update delta.
 """
 import numpy as np
 from scipy.linalg import inv
 from joblib import Parallel, delayed
 from tqdm.auto import tqdm
-from sit_kshap.utils import sample_z, sample_dataset, get_distribution, verify_model_data
+from sim_shapley.utils import sample_z, sample_dataset, get_distribution, verify_model_data
 
 
-class SIT_KSHAP:
+class SIM_Shapley:
     def __init__(self, raw_data, imputer, loss_func, l2_penalty=0.1, t=0.5, method_type="global"):
         """
         __init__
@@ -29,10 +29,10 @@ class SIT_KSHAP:
 
 
     def __call__(self, X, Y, z_sample_num, data_batch_size=512, max_iteration_num=1e5,
-                 thresh=0.05, n_jobs=-1, random_state=None, avoid_negative=False,
-                 verbose=False, return_convergence_process=False, negative_ratio=0.3):
+                 thresh=0.05, n_jobs=-1, random_state=None, avoid_negative=False, negative_ratio=0.3,
+                 verbose=False, return_convergence_process=False):
         """
-        Main sampling process of SIT-KSHAP.
+        Main sampling process of SIM-Shapley.
         Args:
             X: data used for estimating shapley values, shape: (num_of_samples, feature_num).
             Y: data label or target value of X.
@@ -42,9 +42,10 @@ class SIT_KSHAP:
             thresh: threshold of convergence detection
             n_jobs: number of jobs used for parallel computing. -1 means using all cpu cores.
             random_state: random_state for np.random.default_rng().
-            avoid_negative：avoid negative sampling
+            avoid_negative：undertake stable-SIM-Shapley.
+            negative_ratio: the ratio to detect negative sampling.
             verbose：verbose.
-            negative_ratio: the ratio to define negative sampling.
+            return_convergence_process: return convergence ratio in each iteration.
 
         Returns:
             beta: shapley values vector.
